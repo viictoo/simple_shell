@@ -11,7 +11,7 @@ void print_cd_error(const char *program_name, int line_number, const char *dir)
 {
 	const char *error_message = ": cd: can't cd to ";
 
-	write(STDERR_FILENO, program_name, strlen(program_name));
+	write(STDERR_FILENO, program_name, _strlen(program_name));
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, _itoa(line_number), _strlen(_itoa(line_number)));
 	write(STDERR_FILENO, error_message, _strlen(error_message));
@@ -29,7 +29,7 @@ void print_cd_error(const char *program_name, int line_number, const char *dir)
 void change_directory(char *dir, int *exit_status,
 		char *program_name, int line_number)
 {
-	const char *home = _getenv("HOME"), *previous_dir, *error_message;
+	const char *home = _getenv("HOME");
 	char cwd[1024];
 
 	if (dir == NULL)
@@ -38,40 +38,23 @@ void change_directory(char *dir, int *exit_status,
 			perror("cd");
 	} else if (_strcmp(dir, "-") == 0)
 	{
-		previous_dir = _getenv("OLDPWD");
-		if (previous_dir != NULL)
-		{
-			if (getcwd(cwd, sizeof(cwd)) != NULL)
-			{
-				write(STDOUT_FILENO, previous_dir, _strlen(previous_dir));
-				write(STDOUT_FILENO, "\n", 1);
-				if (chdir(previous_dir) == -1)
-				{
-					print_cd_error(program_name, line_number, dir);
-					*exit_status = 2;
-				} else
-				{
-					_setenv("OLDPWD", _getenv("PWD"), 1);
-					_setenv("PWD", previous_dir, 1);
-				}
-			} else
-				perror("getcwd");
+		change_dir_to(program_name, line_number, exit_status);
 
+	} else
+	{
+		if (chdir(dir) == -1)
+		{
+			print_cd_error(program_name, line_number, dir);
 		} else
 		{
-			error_message = "cd: OLDPWD not set\n";
-			write(STDERR_FILENO, error_message, _strlen(error_message));
-		}
-	}else {
-		if (chdir(dir) == -1) {
-			perror("cd");
-		} else {
-			char cwd[1024];
-			if (getcwd(cwd, sizeof(cwd)) != NULL) {
+
+			if (getcwd(cwd, sizeof(cwd)) != NULL)
+			{
 				_setenv("OLDPWD", _getenv("PWD"), 1);
 				_setenv("PWD", cwd, 1);
 
-			} else {
+			} else
+			{
 				perror("getcwd");
 			}
 		}
@@ -80,43 +63,42 @@ void change_directory(char *dir, int *exit_status,
 
 /**
  *  change_dir_to - Changes to the specified directory.
- * @dir: The directory to change to.
- * @cwd: store the current working directory path.
  * @program_name: name of the program or command.
  * @line_number: The line number
  * @exit_status: exit status
  * Return: void
  **/
-void change_dir_to(char *dir, char *cwd, char *program_name,
-		int line_number, int *exit_status)
+void change_dir_to(char *program_name, int line_number, int *exit_status)
 {
-	if (chdir(dir) == -1)
-	{
-		if (_strcmp(dir, "..") == 0)
-		{
-			*exit_status = 0;
-		}
-		else
-		{
-			print_cd_error(program_name, line_number, dir);
-			*exit_status = 5;
-		}
-	}
-	else
+	const char *previous_dir = _getenv("OLDPWD");
+	const char *error_message = "cd: OLDPWD not set\n";
+	char cwd[1024];
+
+	if (previous_dir != NULL)
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
-			_setenv("OLDPWD", _getenv("PWD"), 1);
-			_setenv("PWD", cwd, 1);
+			write(STDOUT_FILENO, previous_dir, _strlen(previous_dir));
+			write(STDOUT_FILENO, "\n", 1);
+			if (chdir(previous_dir) == -1)
+			{
+				print_cd_error(program_name, line_number, "-");
+				*exit_status = 2;
+			}
+			else
+			{
+				_setenv("OLDPWD", _getenv("PWD"), 1);
+				_setenv("PWD", previous_dir, 1);
+			}
 		}
 		else
-		{
-			print_cd_error(program_name, line_number, dir);
-			*exit_status = 6;
-		}
+			perror("getcwd");
+	}
+	else
+	{
+		write(STDERR_FILENO, error_message, _strlen(error_message));
 	}
 }
-
 
 /**
  * build_error_message - Builds an error message

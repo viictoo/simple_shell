@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string.h>
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -129,9 +129,9 @@ void handle_echo_arguments(char **args, int *exit_status);
 void handle_logic_op(char **args, char *program_name, char **env,
 		int *exit_status, int line_number, char *path);
 
-void handle_alias_command(char **args);
+
 void handle_other_commands(char **args, char *program_name, char **env,
-		int *exit_status, int line_number, char *path);
+		int *exit_status, int line_number, char *path, alias_t **aliases);
 void handle_alias_command_arguments(char *alias_value, char *program_name,
 		char **env, int *exit_status, int line_number, char *path);
 
@@ -144,12 +144,12 @@ int _isdigit(int c);
 int _isspace(int c);
 
 
-void add_alias(const char *name, const char *value);
-void print_aliases(void);
-char *get_alias_value(const char *name);
+void add_alias(const char *name, const char *value, alias_t **aliases);
+void print_aliases(alias_t *aliases);
+char *get_alias_value(const char *name, alias_t *aliases);
 void print_alias(const char *name, const char *value);
 void print_alias_not_found(const char *alias);
-void handle_alias(char **args);
+void handle_alias(char **args, alias_t **aliases);
 char **split_string(const char *str, char delimiter);
 void free_split_string(char **strings);
 char *_strtok_r(char *str, const char *delim, char **saveptr);
@@ -158,8 +158,7 @@ void print_cd_error(const char *program_name, int line_number,
 		const char *dir);
 void change_directory(char *dir, int *exit_status, char *program_name,
 		int line_number);
-void change_dir_to(char *dir, char *cwd, char *program_name, int line_number,
-		int *exit_status);
+void change_dir_to(char *program_name, int line_number, int *exit_status);
 void build_error_message(char *buffer, const char *program_name,
 		const char *command, int status, int line_number);
 char *_itoa(int num);
