@@ -1,4 +1,3 @@
-
 #include "shell.h"
 
 /**
@@ -15,9 +14,8 @@ void process_input(char *buf, char *program_name,
 		char **env, int *exit_status, int line_number, char *path)
 {
 	char *commands[MAX_COMMANDS];
-	int num_commands = 0, i;
-	char *args[MAX_ARGC];
-	char *command;
+	int num_commands = 0, i, is_hash = 0;
+	char *args[MAX_ARGC], *command;
 
 	tokenize_input(buf, commands, &num_commands);
 
@@ -28,8 +26,15 @@ void process_input(char *buf, char *program_name,
 		split_tokens(command, args, MAX_ARGC);
 
 		if (args[0] == NULL)
+		continue;
+		while (args[is_hash] != NULL)
 		{
-			continue;
+			if (args[is_hash][0] == '#')
+			{
+				args[is_hash] = NULL;
+				break;
+			}
+			is_hash++;
 		}
 		handle_logic(args, program_name, env, exit_status, line_number, path);
 	}
