@@ -9,12 +9,35 @@ alias_t *aliases;
  */
 void add_alias(const char *name, const char *value)
 {
+	alias_t *current_alias = aliases;
+	alias_t *previous_alias = NULL;
+
+	while (current_alias != NULL)
+	{
+		if (_strcmp(current_alias->name, name) == 0)
+		{
+			free(current_alias->value);
+			current_alias->value = _strdup(value);
+			return;
+		}
+		previous_alias = current_alias;
+		current_alias = current_alias->next;
+	}
+
 	alias_t *new_alias = (alias_t *)malloc(sizeof(alias_t));
 
 	new_alias->name = _strdup(name);
 	new_alias->value = _strdup(value);
-	new_alias->next = aliases;
-	aliases = new_alias;
+	new_alias->next = NULL;
+
+	if (previous_alias != NULL)
+	{
+		previous_alias->next = new_alias;
+	}
+	else
+	{
+		aliases = new_alias;
+	}
 }
 
 
