@@ -11,6 +11,7 @@ void add_alias(const char *name, const char *value)
 {
 	alias_t *current_alias = aliases;
 	alias_t *previous_alias = NULL;
+	alias_t *new_alias;
 
 	while (current_alias != NULL)
 	{
@@ -24,7 +25,7 @@ void add_alias(const char *name, const char *value)
 		current_alias = current_alias->next;
 	}
 
-	alias_t *new_alias = (alias_t *)malloc(sizeof(alias_t));
+	new_alias = (alias_t *)malloc(sizeof(alias_t));
 
 	new_alias->name = _strdup(name);
 	new_alias->value = _strdup(value);
