@@ -157,7 +157,7 @@ void print_cd_error(const char *program_name, int line_number,
 		const char *dir);
 void change_directory(char *dir, int *exit_status, char *program_name,
 		int line_number);
-void change_dir_to(char *program_name, int line_number, int *exit_status)
+void change_dir_to(char *program_name, int line_number, int *exit_status);
 void build_error_message(char *buffer, const char *program_name,
 		const char *command, int status, int line_number);
 char *_itoa(int num);
