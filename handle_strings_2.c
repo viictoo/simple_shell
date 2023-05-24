@@ -33,7 +33,7 @@ char *_strdup(const char *str)
 	if (str == NULL)
 		return (NULL);
 
-	p = (char *) malloc(strlen(str) + 1);
+	p = (char *) malloc(_strlen(str) + 1);
 
 	if (p == NULL)
 		return (NULL);

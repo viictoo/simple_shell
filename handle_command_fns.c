@@ -13,9 +13,9 @@ void remove_double_quotes(char **args)
 
 	while (args[i] != NULL)
 	{
-		if (args[i][0] == '\"' && args[i][strlen(args[i]) - 1] == '\"')
+		if (args[i][0] == '\"' && args[i][_strlen(args[i]) - 1] == '\"')
 		{
-			arg_length = strlen(args[i]);
+			arg_length = _strlen(args[i]);
 			_memmove(args[i], args[i] + 1, arg_length - 2);
 			args[i][arg_length - 2] = '\0';
 		}

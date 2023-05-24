@@ -32,17 +32,17 @@ void print_aliases(void)
 
 	while (current != NULL)
 	{
-		len += strlen(current->name) + strlen(current->value);
+		len += _strlen(current->name) + _strlen(current->value);
 		output = malloc(len + 1);
 		if (output == NULL)
 		{
 			write(STDERR_FILENO, "Memory allocation failed.\n", 26);
 			return;
 		}
-		strcpy(output, current->name);
-		strcat(output, "='");
-		strcat(output, current->value);
-		strcat(output, "'\n");
+		_strcpy(output, current->name);
+		_strcat(output, "='");
+		_strcat(output, current->value);
+		_strcat(output, "'\n");
 
 		write(1, output, len);
 		free(output);

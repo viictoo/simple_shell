@@ -27,7 +27,7 @@ void handle_setenv_command(char *arg1, char *arg2, int *exit_status)
 	else
 	{
 		error_message = "Error: Invalid number of arguments for setenv command.\n";
-		write(STDERR_FILENO, error_message, strlen(error_message));
+		write(STDERR_FILENO, error_message, _strlen(error_message));
 
 		*exit_status = 1;
 	}
@@ -52,7 +52,7 @@ void handle_unset_command(char *arg)
 	else
 	{
 		error_message = "Use: unset VAR.\n";
-		write(STDERR_FILENO, error_message, strlen(error_message));
+		write(STDERR_FILENO, error_message, _strlen(error_message));
 	}
 }
 /**
