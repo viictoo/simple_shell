@@ -68,6 +68,7 @@ int num_len(int num)
  * @dest: The destination string
  * @src: The source string
  * @n: The maximum number of characters to concatenate.
+ * Return: char pointer
  **/
 char *_strncat(char *dest, const char *src, size_t n)
 {

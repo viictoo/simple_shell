@@ -1,5 +1,5 @@
 #include "shell.h"
-alias_t *aliases;
+
 
 /**
  * add_alias - Adds an alias with the specified name and value.
@@ -9,6 +9,7 @@ alias_t *aliases;
  */
 void add_alias(const char *name, const char *value)
 {
+	alias_t *aliases = NULL;
 	alias_t *current_alias = aliases;
 	alias_t *previous_alias = NULL;
 	alias_t *new_alias;
@@ -50,6 +51,7 @@ void add_alias(const char *name, const char *value)
  **/
 void print_aliases(void)
 {
+	alias_t *aliases = NULL;
 	alias_t *current = aliases;
 	int len = 4;
 	char *output;
@@ -80,6 +82,7 @@ void print_aliases(void)
  **/
 char *get_alias_value(const char *name)
 {
+	alias_t *aliases = NULL;
 	alias_t *current = aliases;
 
 	while (current != NULL)
