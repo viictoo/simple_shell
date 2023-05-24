@@ -116,35 +116,38 @@ void build_error_message(char *buffer, const char *program_name,
 	char line_number_str[12];
 	size_t command_length;
 
+	int_to_str(line_number, line_number_str, sizeof(line_number_str));
 	if (status == 126)
 	{
 		error_msg = ": Permission denied\n";
 	} else if (status == 23)
 	{
 		error_msg = ": exit: Illegal number: ";
-	} else
+		_strcpy(buffer, program_name);
+		_strcat(buffer, ": ");
+		_strcat(buffer, line_number_str);
+		_strcat(buffer, ": exit: Illegal number: ");
+		_strcat(buffer, command);
+		_strcat(buffer, "\n");
+		return;
+	}
+	else
 	{
 		error_msg = ": not found\n";
 	}
 	_strcpy(buffer, program_name);
 	_strcat(buffer, ": ");
-
-	int_to_str(line_number, line_number_str, sizeof(line_number_str));
 	_strcat(buffer, line_number_str);
 	_strcat(buffer, ": ");
 	command_length = _strlen(command);
-
 	if (command_length > 0 && _isspace((unsigned char)command[0]))
 	{
 
 		_strncat(buffer, command, command_length);
 	} else
 	{
-
 		while (_isspace((unsigned char)*command))
-		{
 			command++;
-		}
 		_strcat(buffer, command);
 	}
 	_strcat(buffer, error_msg);
