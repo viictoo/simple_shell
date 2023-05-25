@@ -13,22 +13,15 @@ int main(int argc, char **argv, char **env)
 {
 	int exit_status = 0;
 	char *path_value = _getenv("PATH");
-	int num_paths = 0;
-	char *path_copy = _strdup(path_value);
-	char *dir = _strtok(path_copy, ":");
 
-	while (dir != NULL && num_paths < MAX_PATHS)
-	{
-		dir = _strtok(NULL, ":");
-	}
 	if (argc == 2)
 		handle_file(argv[1], env, argv[0], path_value, &exit_status);
 	else
 	{
-		free(path_copy);
+
 		handle_input(path_value, env, argv[0], &exit_status);
 	}
-	free(path_copy);
+
 	return (exit_status);
 }
 
