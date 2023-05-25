@@ -24,7 +24,10 @@ int main(int argc, char **argv, char **env)
 	if (argc == 2)
 		handle_file(argv[1], env, argv[0], path_value, &exit_status);
 	else
+	{
+		free(path_copy);
 		handle_input(path_value, env, argv[0], &exit_status);
+	}
 	free(path_copy);
 	return (exit_status);
 }
