@@ -18,11 +18,19 @@ void handle_file(char *file_path, char **env, char *program_name, char *path,
 	int line_number = 0;
 	ssize_t user_input;
 	char *params[MAX_ARGC];
+	const char *error_message = ": cannot open ";
+	const char *error_message2 = ": No such file";
 
 	if (file < 0)
 	{
-		perror("File open error");
-		exit(1);
+		write(STDERR_FILENO, program_name, _strlen(program_name));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, _itoa(line_number), _strlen(_itoa(line_number)));
+		write(STDERR_FILENO, error_message, _strlen(error_message));
+		write(STDERR_FILENO, file_path, _strlen(file_path));
+		write(STDERR_FILENO, error_message2, _strlen(error_message2));
+		write(STDERR_FILENO, "\n", 1);
+		exit(2);
 	}
 	while ((user_input = file_getline(&lineText, &num_items, file)) != -1)
 	{
