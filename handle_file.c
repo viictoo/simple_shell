@@ -18,8 +18,8 @@ void handle_file(char *file_path, char **env, char *program_name, char *path,
 	int line_number = 0;
 	ssize_t user_input;
 	char *params[MAX_ARGC];
-	const char *error_message = ": cannot open ";
-	const char *error_message2 = ": No such file";
+	const char *error_message = ": Can't open ";
+
 
 	if (file < 0)
 	{
@@ -28,7 +28,7 @@ void handle_file(char *file_path, char **env, char *program_name, char *path,
 		write(STDERR_FILENO, "0", 1);
 		write(STDERR_FILENO, error_message, _strlen(error_message));
 		write(STDERR_FILENO, file_path, _strlen(file_path));
-		write(STDERR_FILENO, error_message2, _strlen(error_message2));
+
 		write(STDERR_FILENO, "\n", 1);
 
 		exit(127);
