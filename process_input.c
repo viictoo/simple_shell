@@ -10,13 +10,13 @@
 
 void tokenize_input(char *buf, char **commands, int *num_commands)
 {
-	char *token = _strtok(buf, ";'&&'");
+	char *token = _strtok(buf, ";'&&''||'");
 
 	while (token != NULL && *num_commands < MAX_COMMANDS)
 	{
 		commands[*num_commands] = token;
 		(*num_commands)++;
-		token = _strtok(NULL, ";'&&'");
+		token = _strtok(NULL, ";'&&''||'");
 	}
 }
 /**
