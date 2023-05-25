@@ -86,6 +86,8 @@ void handle_exit_command(char **arg, int *exit_status,
 		if (*endptr == '\0' && exit_code <= INT_MAX && exit_code >= 0)
 		{
 			*exit_status = (int)exit_code;
+			free(*arg);
+			exit(*exit_status);
 		}
 		else
 		{
@@ -94,6 +96,5 @@ void handle_exit_command(char **arg, int *exit_status,
 		}
 	}
 	free(*arg);
-	*exit_status = 0;
-	exit(*exit_status);
+	exit(0);
 }
