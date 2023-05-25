@@ -73,25 +73,26 @@ void handle_variable_replacement(char **args, int *exit_status)
  * @line_number: The line number where the "exit" command is encountered.
  * Return: Nothing.
  */
-void handle_exit_command(char *arg, int *exit_status,
+void handle_exit_command(char **arg, int *exit_status,
 		char *program_name, int line_number)
 {
 	char *endptr;
 	long exit_code;
 
-	if (arg != NULL)
+	if (arg[1] != NULL)
 	{
 
-		exit_code = _strtol(arg, &endptr, 10);
+		exit_code = _strtol(arg[1], &endptr, 10);
 		if (*endptr == '\0' && exit_code <= INT_MAX && exit_code >= 0)
 		{
 			*exit_status = (int)exit_code;
 		}
 		else
 		{
-			print_error(program_name, arg, 23, line_number);
+			print_error(program_name, arg[1], 23, line_number);
 			*exit_status = 2;
 		}
 	}
+	free(*arg);
 	exit(*exit_status);
 }

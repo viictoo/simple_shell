@@ -118,7 +118,7 @@ int is_logical_operator(char *arg);
 void remove_double_quotes(char **args);
 void handle_variable_replacement(char **args, int *exit_status);
 
-void handle_exit_command(char *arg, int *exit_status,
+void handle_exit_command(char **arg, int *exit_status,
 		char *program_name, int line_number);
 void handle_setenv_command(char *arg1, char *arg2, int *exit_status);
 void handle_unset_command(char *arg);

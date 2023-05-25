@@ -17,7 +17,7 @@ void handle_command(char **args, char *program_name, char **env,
 	handle_variable_replacement(args, exit_status);
 
 	if (_strcmp(args[0], "exit") == 0)
-		handle_exit_command(args[1], exit_status, program_name,
+		handle_exit_command(args, exit_status, program_name,
 				line_number);
 	else if (_strcmp(args[0], "cd") == 0)
 		change_directory(args[1], exit_status,
