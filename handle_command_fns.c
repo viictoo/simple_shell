@@ -94,5 +94,6 @@ void handle_exit_command(char **arg, int *exit_status,
 		}
 	}
 	free(*arg);
-	exit(0);
+	*exit_status = 0;
+	exit(*exit_status);
 }
