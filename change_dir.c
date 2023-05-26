@@ -11,11 +11,11 @@ void print_cd_error(const char *program_name, int line_number, const char *dir)
 {
 	const char *error_message = ": cd: can't cd to ";
 
-	write(STDERR_FILENO, program_name, _strlen(program_name));
+	write(STDERR_FILENO, program_name, charlen(program_name));
 	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, _itoa(line_number), _strlen(_itoa(line_number)));
-	write(STDERR_FILENO, error_message, _strlen(error_message));
-	write(STDERR_FILENO, dir, _strlen(dir));
+	write(STDERR_FILENO, _itoa(line_number), charlen(_itoa(line_number)));
+	write(STDERR_FILENO, error_message, charlen(error_message));
+	write(STDERR_FILENO, dir, charlen(dir));
 	write(STDERR_FILENO, "\n", 1);
 }
 /**
@@ -36,7 +36,7 @@ void change_directory(char *dir, int *exit_status,
 	{
 		if (chdir(home) == -1)
 			perror("cd");
-	} else if (_strcmp(dir, "-") == 0)
+	} else if (charcmp(dir, "-") == 0)
 	{
 		change_dir_to(program_name, line_number, exit_status);
 
@@ -78,7 +78,7 @@ void change_dir_to(char *program_name, int line_number, int *exit_status)
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
-			write(STDOUT_FILENO, previous_dir, _strlen(previous_dir));
+			write(STDOUT_FILENO, previous_dir, charlen(previous_dir));
 			write(STDOUT_FILENO, "\n", 1);
 			if (chdir(previous_dir) == -1)
 			{
@@ -96,7 +96,7 @@ void change_dir_to(char *program_name, int line_number, int *exit_status)
 	}
 	else
 	{
-		write(STDERR_FILENO, error_message, _strlen(error_message));
+		write(STDERR_FILENO, error_message, charlen(error_message));
 	}
 }
 
@@ -123,7 +123,7 @@ void build_error_message(char *buffer, const char *program_name,
 	} else if (status == 23)
 	{
 		error_msg = ": exit: Illegal number: ";
-		_strcpy(buffer, program_name);
+		charcopy(buffer, program_name);
 		_strcat(buffer, ": ");
 		_strcat(buffer, line_number_str);
 		_strcat(buffer, ": exit: Illegal number: ");
@@ -135,11 +135,11 @@ void build_error_message(char *buffer, const char *program_name,
 	{
 		error_msg = ": not found\n";
 	}
-	_strcpy(buffer, program_name);
+	charcopy(buffer, program_name);
 	_strcat(buffer, ": ");
 	_strcat(buffer, line_number_str);
 	_strcat(buffer, ": ");
-	command_length = _strlen(command);
+	command_length = charlen(command);
 	if (command_length > 0 && _isspace((unsigned char)command[0]))
 	{
 

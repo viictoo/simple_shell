@@ -18,21 +18,21 @@ void handle_alias(char **args)
 	while (args[i] != NULL)
 	{
 		alias = args[i];
-		equal_sign = _strchr(alias, '=');
+		equal_sign = charchr(alias, '=');
 		if (equal_sign != NULL)
 		{
 			*equal_sign = '\0';
 			name = alias;
 			value = equal_sign + 1;
-			if (value[0] == '\'' && value[_strlen(value) - 1] == '\'')
+			if (value[0] == '\'' && value[charlen(value) - 1] == '\'')
 			{
-				value[_strlen(value) - 1] = '\0';
+				value[charlen(value) - 1] = '\0';
 				value++;
 			}
 			add_alias(name, value);
-		} else if (alias[0] == '\'' && alias[_strlen(alias) - 1] == '\'')
+		} else if (alias[0] == '\'' && alias[charlen(alias) - 1] == '\'')
 		{
-			alias[_strlen(alias) - 1] = '\0';
+			alias[charlen(alias) - 1] = '\0';
 			alias++;
 			value = get_alias_value(alias);
 		} else
@@ -75,7 +75,7 @@ char **split_string(const char *str, char delimiter)
 
 	while ((token = _strtok_r((char *)temp, &delimiter, &rest)) != NULL)
 	{
-		result[i] = _strdup(token);
+		result[i] = chardup(token);
 		i++;
 		temp = NULL;
 	}

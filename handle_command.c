@@ -16,22 +16,22 @@ void handle_command(char **args, char *program_name, char **env,
 	remove_double_quotes(args);
 	handle_variable_replacement(args, exit_status);
 
-	if (_strcmp(args[0], "exit") == 0)
+	if (charcmp(args[0], "exit") == 0)
 		handle_exit_command(args, exit_status, program_name,
 				line_number);
-	else if (_strcmp(args[0], "cd") == 0)
+	else if (charcmp(args[0], "cd") == 0)
 		change_directory(args[1], exit_status,
 				program_name, line_number);
-	else if (_strcmp(args[0], "env") == 0)
+	else if (charcmp(args[0], "env") == 0)
 		handle_env_command();
-	else if (_strcmp(args[0], "setenv") == 0)
+	else if (charcmp(args[0], "setenv") == 0)
 		handle_setenv_command(args[1], args[2], exit_status);
-	else if (_strcmp(args[0], "unsetenv") == 0)
+	else if (charcmp(args[0], "unsetenv") == 0)
 		handle_unset_command(args[1]);
-	else if (_strcmp(args[0], "&&") == 0)
+	else if (charcmp(args[0], "&&") == 0)
 		handle_logic_op(args + 1, program_name, env, exit_status,
 				line_number, path);
-	else if (_strcmp(args[0], "alias") == 0)
+	else if (charcmp(args[0], "alias") == 0)
 		handle_alias_command(args);
 	else
 		handle_other_commands(args, program_name, env, exit_status,

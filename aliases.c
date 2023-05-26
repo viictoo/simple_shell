@@ -16,10 +16,10 @@ void add_alias(const char *name, const char *value)
 
 	while (current_alias != NULL)
 	{
-		if (_strcmp(current_alias->name, name) == 0)
+		if (charcmp(current_alias->name, name) == 0)
 		{
 			free(current_alias->value);
-			current_alias->value = _strdup(value);
+			current_alias->value = chardup(value);
 			return;
 		}
 		previous_alias = current_alias;
@@ -28,8 +28,8 @@ void add_alias(const char *name, const char *value)
 
 	new_alias = (alias_t *)malloc(sizeof(alias_t));
 
-	new_alias->name = _strdup(name);
-	new_alias->value = _strdup(value);
+	new_alias->name = chardup(name);
+	new_alias->value = chardup(value);
 	new_alias->next = NULL;
 
 	if (previous_alias != NULL)
@@ -58,14 +58,14 @@ void print_aliases(void)
 
 	while (current != NULL)
 	{
-		len += _strlen(current->name) + _strlen(current->value);
+		len += charlen(current->name) + charlen(current->value);
 		output = malloc(len + 1);
 		if (output == NULL)
 		{
 			write(STDERR_FILENO, "Memory allocation failed.\n", 26);
 			return;
 		}
-		_strcpy(output, current->name);
+		charcopy(output, current->name);
 		_strcat(output, "='");
 		_strcat(output, current->value);
 		_strcat(output, "'\n");
@@ -87,7 +87,7 @@ char *get_alias_value(const char *name)
 
 	while (current != NULL)
 	{
-		if (_strcmp(current->name, name) == 0)
+		if (charcmp(current->name, name) == 0)
 			return (current->value);
 		current = current->next;
 	}
@@ -103,9 +103,9 @@ char *get_alias_value(const char *name)
 
 void print_alias(const char *name, const char *value)
 {
-	write(1, name, _strlen(name));
+	write(1, name, charlen(name));
 	write(1, "='", 2);
-	write(1, value, _strlen(value));
+	write(1, value, charlen(value));
 	write(1, "'\n", 2);
 }
 
@@ -117,6 +117,6 @@ void print_alias(const char *name, const char *value)
 void print_alias_not_found(const char *alias)
 {
 	write(1, "alias: ", 7);
-	write(1, alias, _strlen(alias));
+	write(1, alias, charlen(alias));
 	write(1, " not found\n", 11);
 }

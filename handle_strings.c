@@ -3,35 +3,35 @@
 /**
  * _strtok - Breaks a string into a series of tokens.
  * @str: string to be tokenized.
- * @delim: delimiter characters.
+ * @separator: delimiter characters.
  * Return: pointer to the next token
  **/
 
-char *_strtok(char *str, const char *delim)
+char *_strtok(char *str, const char *separator)
 {
-	static char *saved_str;
+	static char *new_str;
 	char *token;
 
 	if (str != NULL)
 	{
-		saved_str = str;
+		new_str = str;
 	}
 
-	if (saved_str == NULL || *saved_str == '\0')
+	if (new_str == NULL || *new_str == '\0')
 		return (NULL);
 
-	saved_str += _strspn(saved_str, delim);
-	if (*saved_str == '\0')
+	new_str += _strspn(new_str, separator);
+	if (*new_str == '\0')
 	{
 		return (NULL);
 	}
-	token = saved_str;
+	token = new_str;
 
-	saved_str += _strcspn(saved_str, delim);
-	if (*saved_str != '\0')
+	new_str += _strcspn(new_str, separator);
+	if (*new_str != '\0')
 	{
-		*saved_str = '\0';
-		saved_str++;
+		*new_str = '\0';
+		new_str++;
 	}
 
 	return (token);
@@ -45,24 +45,24 @@ char *_strtok(char *str, const char *delim)
  **/
 void *_memmove(void *destination, const void *source, size_t num_bytes)
 {
-	char *dest = (char *)destination;
-	const char *src = (const char *)source;
+	char *str_out = (char *)destination;
+	const char *str_in = (const char *)source;
 	size_t i;
 
-	if (dest == src)
-		return (dest);
+	if (str_out == str_in)
+		return (str_out);
 
-	if (src < dest)
+	if (str_in < str_out)
 	{
 		for (i = num_bytes; i > 0; i--)
-			dest[i - 1] = src[i - 1];
+			str_out[i - 1] = str_in[i - 1];
 	} else
 	{
 		for (i = 0; i < num_bytes; i++)
-			dest[i] = src[i];
+			str_out[i] = str_in[i];
 	}
 
-	return (dest);
+	return (str_out);
 }
 /**
  * _strspn - Calculates the length of the initial segment of a string
@@ -77,7 +77,7 @@ size_t _strspn(const char *str, const char *accept)
 	const char *string = str;
 	size_t n = 0;
 
-	while (*string != '\0' && _strchr(accept, *string) != NULL)
+	while (*string != '\0' && charchr(accept, *string) != NULL)
 	{
 		n++;
 		string++;
@@ -96,7 +96,7 @@ size_t _strcspn(const char *str, const char *reject)
 	const char *string = str;
 	size_t n = 0;
 
-	while (*string != '\0' && _strchr(reject, *string) == NULL)
+	while (*string != '\0' && charchr(reject, *string) == NULL)
 	{
 		n++;
 		string++;
@@ -114,10 +114,7 @@ int _atoi(const char *s)
 {
 	int i, j, n, len, started, digit;
 
-	i = 0;
-	j = 0;
-	n = 0;
-	len = 0;
+	i = 0, j = 0, n = 0, len = 0;
 	started = 0;
 	digit = 0;
 

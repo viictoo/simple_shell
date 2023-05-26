@@ -23,11 +23,11 @@ void handle_file(char *file_path, char **env, char *program_name, char *path,
 
 	if (file < 0)
 	{
-		write(STDERR_FILENO, program_name, _strlen(program_name));
+		write(STDERR_FILENO, program_name, charlen(program_name));
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, "0", 1);
-		write(STDERR_FILENO, error_message, _strlen(error_message));
-		write(STDERR_FILENO, file_path, _strlen(file_path));
+		write(STDERR_FILENO, error_message, charlen(error_message));
+		write(STDERR_FILENO, file_path, charlen(file_path));
 
 		write(STDERR_FILENO, "\n", 1);
 
@@ -77,11 +77,11 @@ void run_cmds(char **commands, int num_commands, char **env,
 			continue;
 
 		exec_flag = 1;
-		if (_strcmp(args[0], "&&") == 0)
+		if (charcmp(args[0], "&&") == 0)
 		{
 			exec_flag = (*exit_status == 0);
 		}
-		else if (_strcmp(args[0], "||") == 0)
+		else if (charcmp(args[0], "||") == 0)
 		{
 			exec_flag = (*exit_status != 0);
 		}
@@ -104,9 +104,9 @@ void run_cmds(char **commands, int num_commands, char **env,
  */
 void trim_operator(char *command, const char *op)
 {
-	size_t operator_length = _strlen(op), new_length;
+	size_t operator_length = charlen(op), new_length;
 	size_t prefix_length = _strspn(command, " \t");
-	size_t command_length = _strlen(command);
+	size_t command_length = charlen(command);
 
 	if (prefix_length > 0 && command_length > operator_length)
 	{
@@ -144,7 +144,7 @@ void process_file(const char *filename, char **env, char *program_name,
 		line_number++;
 		buf[read_bytes - 1] = '\0';
 
-		comment_start = _strchr(buf, '#');
+		comment_start = charchr(buf, '#');
 		if (comment_start != NULL)
 			*comment_start = '\0';
 

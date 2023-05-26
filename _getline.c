@@ -77,7 +77,7 @@ void handle_line_ptr(char **lineptr, size_t *n, char *buff, size_t buffer_size)
 	}
 	else
 	{
-		_strcpy(*lineptr, buff);
+		charcopy(*lineptr, buff);
 		free(buff);
 	}
 }

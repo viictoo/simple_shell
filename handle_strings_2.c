@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * _strcpy - copies a string
+ * charcopy - copies a string
  * @dest: destination pointer
  * @src: source pointer
  * Return: the pointer to dest
  */
-char *_strcpy(char *dest, const char *src)
+char *charcopy(char *dest, const char *src)
 {
 	char *destination = dest;
 
@@ -21,23 +21,23 @@ char *_strcpy(char *dest, const char *src)
 }
 
 /**
- * _strdup - function that returns a pointer to
+ * chardup - function that returns a pointer to
  * a newly allocated space in memory
  * @str: character array
  * Return: a pointer to the duplicated string or NULL
  */
-char *_strdup(const char *str)
+char *chardup(const char *str)
 {
 	char *p;
 
 	if (str == NULL)
 		return (NULL);
 
-	p = (char *) malloc(_strlen(str) + 1);
+	p = (char *) malloc(charlen(str) + 1);
 
 	if (p == NULL)
 		return (NULL);
-	_strcpy(p, str);
+	charcopy(p, str);
 	return (p);
 }
 
@@ -74,12 +74,12 @@ int _strncmp(const char *s1, const char *s2, size_t n)
 void *_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t i;
-	char *dest_ptr = (char *)dest;
+	char *go_to = (char *)dest;
 	const char *src_ptr = (const char *)src;
 
 	for (i = 0; i < n; i++)
 	{
-		dest_ptr[i] = src_ptr[i];
+		go_to[i] = src_ptr[i];
 	}
 
 	return (dest);
@@ -96,9 +96,7 @@ char *_strcat(char *dest, const char *src)
 	char *dest_ptr = dest;
 
 	while (*dest_ptr != '\0')
-	{
 		dest_ptr++;
-	}
 
 	while (*src != '\0')
 	{

@@ -77,10 +77,10 @@ void handle_logic(char **args, char *program_name,
 
 		if (args[j] != NULL)
 		{
-			if (_strcmp(args[j], "&&") == 0 && *exit_status != 0)
+			if (charcmp(args[j], "&&") == 0 && *exit_status != 0)
 			{
 				should_continue = 0;
-			} else if (_strcmp(args[j], "||") == 0 && *exit_status == 0)
+			} else if (charcmp(args[j], "||") == 0 && *exit_status == 0)
 			{
 				should_continue = 0;
 			}
@@ -96,5 +96,5 @@ void handle_logic(char **args, char *program_name,
 
 int is_logical_operator(char *arg)
 {
-	return (_strcmp(arg, "&&") == 0 || _strcmp(arg, "||") == 0);
+	return (charcmp(arg, "&&") == 0 || charcmp(arg, "||") == 0);
 }

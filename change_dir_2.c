@@ -102,5 +102,5 @@ void print_error(char *program_name, char *command,
 	char error_buf[256];
 
 	build_error_message(error_buf, program_name, command, status, line_number);
-	write(STDERR_FILENO, error_buf, _strlen(error_buf));
+	write(STDERR_FILENO, error_buf, charlen(error_buf));
 }

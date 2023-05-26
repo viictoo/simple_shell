@@ -14,7 +14,7 @@ int main(int argc, char **argv, char **env)
 	int exit_status = 0;
 	char *path_value = _getenv("PATH");
 	int num_paths = 0;
-	char *path_copy = _strdup(path_value);
+	char *path_copy = chardup(path_value);
 	char *dir = _strtok(path_copy, ":");
 
 
@@ -49,13 +49,13 @@ int main(int argc, char **argv, char **env)
 void search_command(char **args, char *path, char *program_name, char **env,
 		int *exit_status, int line_number)
 {
-	char *p_copy = _strdup(path), *full_path;
+	char *p_copy = chardup(path), *full_path;
 	char *dir = _strtok(p_copy, ":");
 	int found = 0;
 
 	while (dir != NULL)
 	{
-		full_path = malloc(_strlen(dir) + _strlen(args[0]) + 2);
+		full_path = malloc(charlen(dir) + charlen(args[0]) + 2);
 		construct_full_path(full_path, dir, args[0]);
 		if (access(full_path, X_OK) == 0)
 		{
@@ -111,12 +111,12 @@ char *_getenv(const char *name)
 	while (*env_var != NULL)
 	{
 		key_name = *env_var;
-		val = _strchr(key_name, '=');
+		val = charchr(key_name, '=');
 
 		if (val != NULL)
 		{
 			*val = '\0';
-			if (_strcmp(key_name, name) == 0)
+			if (charcmp(key_name, name) == 0)
 			{
 				*val = '=';
 				return (val + 1);
@@ -141,7 +141,7 @@ void construct_full_path(char *full_path, const char *dir,
 {
 	char slash[2] = "/";
 
-	_strcpy(full_path, dir);
+	charcopy(full_path, dir);
 	_strcat(full_path, slash);
 	_strcat(full_path, filename);
 }

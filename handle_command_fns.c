@@ -13,9 +13,9 @@ void remove_double_quotes(char **args)
 
 	while (args[i] != NULL)
 	{
-		if (args[i][0] == '\"' && args[i][_strlen(args[i]) - 1] == '\"')
+		if (args[i][0] == '\"' && args[i][charlen(args[i]) - 1] == '\"')
 		{
-			arg_length = _strlen(args[i]);
+			arg_length = charlen(args[i]);
 			_memmove(args[i], args[i] + 1, arg_length - 2);
 			args[i][arg_length - 2] = '\0';
 		}
@@ -41,21 +41,21 @@ void handle_variable_replacement(char **args, int *exit_status)
 		if (args[i][0] == '$')
 		{
 			variable = args[i] + 1;
-			if (_strcmp(variable, "?") == 0)
+			if (charcmp(variable, "?") == 0)
 			{
 				int_to_str(*exit_status, status_str,
 						sizeof(status_str));
-				args[i] = _strdup(status_str);
+				args[i] = chardup(status_str);
 			}
-			else if (_strcmp(variable, "$") == 0)
+			else if (charcmp(variable, "$") == 0)
 			{
 				int_to_str(getpid(), pid_str, sizeof(pid_str));
-				args[i] = _strdup(pid_str);
+				args[i] = chardup(pid_str);
 			} else
 			{
 				value = _getenv(variable);
 				if (value != NULL)
-					args[i] = _strdup(value);
+					args[i] = chardup(value);
 				else if (value == NULL)
 					args[i] = NULL;
 			}

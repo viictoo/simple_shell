@@ -21,8 +21,8 @@ int _setenv(const char *name, const char *value, int overwrite)
 	if (!overwrite && _getenv(name) != NULL)
 		return (0);
 
-	len_name = _strlen(name);
-	len_val = _strlen(value);
+	len_name = charlen(name);
+	len_val = charlen(value);
 	len_entry = len_name + len_val + 2;
 	entry = malloc(len_entry + 1);
 
@@ -32,10 +32,10 @@ int _setenv(const char *name, const char *value, int overwrite)
 		return (-1);
 	}
 	pos = entry;
-	_strcpy(pos, name);
+	charcopy(pos, name);
 	pos += len_name;
 	*pos++ = '=';
-	_strcpy(pos, value);
+	charcopy(pos, value);
 
 	result = _putenv(entry);
 	if (result != 0)
@@ -55,11 +55,11 @@ int _setenv(const char *name, const char *value, int overwrite)
  */
 int _putenv(char *string)
 {
-	size_t length = _strlen(string), name_length, env_count = 0;
-	char *equal_sign = _strchr(string, '='), **env = environ,
+	size_t length = charlen(string), name_length, env_count = 0;
+	char *equal_sign = charchr(string, '='), **env = environ,
 	     **env_copy, *new_entry;
 
-	if (string == NULL || _strchr(string, '=') == NULL)
+	if (string == NULL || charchr(string, '=') == NULL)
 		return (-1);
 	if (equal_sign == NULL)
 		return (-1);
@@ -90,7 +90,7 @@ int _putenv(char *string)
 		free(env_copy);
 		return (-1);
 	}
-	_strcpy(new_entry, string);
+	charcopy(new_entry, string);
 	env_copy[env_count] = new_entry;
 	environ = env_copy;
 	return (0);
@@ -108,17 +108,17 @@ int _unsetenv(const char *name)
 	char **env = environ, *env_name, *env_value, **src, **dst;
 	int found = 0;
 
-	if (name == NULL || _strchr(name, '=') != NULL)
+	if (name == NULL || charchr(name, '=') != NULL)
 		return (-1);
 
 	while (*env != NULL)
 	{
 		env_name = *env;
-		env_value = _strchr(env_name, '=');
+		env_value = charchr(env_name, '=');
 		if (env_value != NULL)
 		{
 			*env_value = '\0';
-			if (_strcmp(env_name, name) == 0)
+			if (charcmp(env_name, name) == 0)
 			{
 				src = env + 1;
 				dst = env;

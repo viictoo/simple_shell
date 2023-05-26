@@ -47,10 +47,10 @@ void split_tokens(char *buf, char **args, int max_args)
  **/
 void remove_op(char *command, char *op)
 {
-	int operator_length = _strspn(command, " \t") + _strlen(op);
+	int operator_length = _strspn(command, " \t") + charlen(op);
 
 	_memmove(command, command + operator_length,
-			_strlen(command) - operator_length + 1);
+			charlen(command) - operator_length + 1);
 }
 
 /**
